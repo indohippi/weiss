@@ -1,0 +1,473 @@
+/* HandArea.css - Beautiful Fan-Style Hand Display */
+
+.hand-area {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  border: 2px solid var(--border-light);
+  border-radius: 20px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.hand-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(79, 158, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: 18px;
+}
+
+.hand-area:hover {
+  border-color: var(--border-medium);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Hand Header */
+.hand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid var(--border-light);
+  position: relative;
+  z-index: 2;
+}
+
+.hand-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hand-count {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.hand-count-label {
+  font-size: 0.8rem;
+  color: var(--accent-green);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hand-count-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  padding: 0.25rem 0.75rem;
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 15px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Hand Cards */
+.hand-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  min-height: 220px;
+  position: relative;
+  z-index: 2;
+  perspective: 1000px;
+}
+
+.hand-card {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom center;
+}
+
+.hand-card:nth-child(1) {
+  transform: rotate(-15deg) translateY(0);
+  z-index: 1;
+}
+
+.hand-card:nth-child(2) {
+  transform: rotate(-10deg) translateY(0);
+  z-index: 2;
+}
+
+.hand-card:nth-child(3) {
+  transform: rotate(-5deg) translateY(0);
+  z-index: 3;
+}
+
+.hand-card:nth-child(4) {
+  transform: rotate(0deg) translateY(0);
+  z-index: 4;
+}
+
+.hand-card:nth-child(5) {
+  transform: rotate(5deg) translateY(0);
+  z-index: 5;
+}
+
+.hand-card:nth-child(6) {
+  transform: rotate(10deg) translateY(0);
+  z-index: 6;
+}
+
+.hand-card:nth-child(7) {
+  transform: rotate(15deg) translateY(0);
+  z-index: 7;
+}
+
+.hand-card:nth-child(8) {
+  transform: rotate(20deg) translateY(0);
+  z-index: 8;
+}
+
+.hand-card:nth-child(9) {
+  transform: rotate(25deg) translateY(0);
+  z-index: 9;
+}
+
+.hand-card:nth-child(10) {
+  transform: rotate(30deg) translateY(0);
+  z-index: 10;
+}
+
+/* Hover Effects for Hand Cards */
+.hand-card:hover {
+  transform: rotate(0deg) translateY(-20px) scale(1.1);
+  z-index: 100;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.hand-card:hover ~ .hand-card {
+  transform: rotate(0deg) translateY(0) scale(1);
+}
+
+/* Selected Card in Hand */
+.hand-card.selected {
+  transform: rotate(0deg) translateY(-30px) scale(1.15);
+  z-index: 200;
+  box-shadow: 0 25px 50px rgba(139, 92, 246, 0.5);
+}
+
+.hand-card.selected ~ .hand-card {
+  transform: rotate(0deg) translateY(0) scale(1);
+}
+
+/* Playable Card in Hand */
+.hand-card.playable {
+  border-color: var(--accent-green);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  animation: playableGlow 2s ease-in-out infinite;
+}
+
+@keyframes playableGlow {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5);
+  }
+}
+
+.hand-card.playable:hover {
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
+}
+
+/* Empty Hand State */
+.hand-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hand-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.hand-empty-text {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* Hand Actions */
+.hand-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.hand-action-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent-blue), #3b82f6);
+  border: none;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(79, 158, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.hand-action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.hand-action-button:hover::before {
+  left: 100%;
+}
+
+.hand-action-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(79, 158, 255, 0.4);
+}
+
+.hand-action-button:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.hand-action-button.secondary {
+  background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.hand-action-button.secondary:hover {
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+}
+
+.hand-action-button.danger {
+  background: linear-gradient(135deg, var(--accent-red), #dc2626);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.hand-action-button.danger:hover {
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .hand-area {
+    padding: 1.25rem;
+  }
+
+  .hand-cards {
+    min-height: 200px;
+  }
+
+  .hand-card:nth-child(n+8) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hand-area {
+    padding: 1rem;
+  }
+
+  .hand-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .hand-cards {
+    min-height: 180px;
+    gap: 0;
+  }
+
+  .hand-card:nth-child(n+7) {
+    display: none;
+  }
+
+  .hand-card:nth-child(1) { transform: rotate(-12deg) translateY(0); }
+  .hand-card:nth-child(2) { transform: rotate(-8deg) translateY(0); }
+  .hand-card:nth-child(3) { transform: rotate(-4deg) translateY(0); }
+  .hand-card:nth-child(4) { transform: rotate(0deg) translateY(0); }
+  .hand-card:nth-child(5) { transform: rotate(4deg) translateY(0); }
+  .hand-card:nth-child(6) { transform: rotate(8deg) translateY(0); }
+
+  .hand-card:hover {
+    transform: rotate(0deg) translateY(-15px) scale(1.05);
+  }
+
+  .hand-card.selected {
+    transform: rotate(0deg) translateY(-20px) scale(1.1);
+  }
+
+  .hand-actions {
+    gap: 0.75rem;
+  }
+
+  .hand-action-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hand-area {
+    padding: 0.75rem;
+  }
+
+  .hand-label {
+    font-size: 1.1rem;
+  }
+
+  .hand-cards {
+    min-height: 160px;
+  }
+
+  .hand-card:nth-child(n+6) {
+    display: none;
+  }
+
+  .hand-card:nth-child(1) { transform: rotate(-10deg) translateY(0); }
+  .hand-card:nth-child(2) { transform: rotate(-6deg) translateY(0); }
+  .hand-card:nth-child(3) { transform: rotate(-2deg) translateY(0); }
+  .hand-card:nth-child(4) { transform: rotate(2deg) translateY(0); }
+  .hand-card:nth-child(5) { transform: rotate(6deg) translateY(0); }
+
+  .hand-card:hover {
+    transform: rotate(0deg) translateY(-10px) scale(1.03);
+  }
+
+  .hand-card.selected {
+    transform: rotate(0deg) translateY(-15px) scale(1.08);
+  }
+
+  .hand-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hand-action-button {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Animations */
+.hand-area {
+  animation: handAreaSlideUp 0.6s ease-out;
+}
+
+@keyframes handAreaSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hand-card {
+  animation: handCardAppear 0.8s ease-out;
+}
+
+@keyframes handCardAppear {
+  from {
+    opacity: 0;
+    transform: rotate(0deg) translateY(50px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--rotation)) translateY(0) scale(1);
+  }
+}
+
+/* Card Count Badge */
+.hand-card-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--accent-red);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 2px solid var(--primary-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 101;
+}
+
+/* Hand Area Overlay */
+.hand-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  border-radius: 18px;
+}
+
+.hand-overlay-content {
+  text-align: center;
+  color: var(--text-primary);
+  padding: 2rem;
+}
+
+.hand-overlay-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--accent-blue);
+}
+
+.hand-overlay-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}

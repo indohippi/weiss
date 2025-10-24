@@ -1,0 +1,106 @@
+/* DeckExporter.css */
+
+.deck-exporter {
+  margin-top: 15px;
+}
+
+.exporter-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.export-btn,
+.import-btn {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.1);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.export-btn:hover,
+.import-btn:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.import-panel {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+}
+
+.import-panel h4 {
+  margin: 0 0 10px 0;
+  color: #8b5cf6;
+  font-size: 1rem;
+}
+
+.import-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.85rem;
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  resize: vertical;
+  min-height: 150px;
+}
+
+.import-textarea:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.import-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.import-confirm-btn,
+.import-cancel-btn {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 2px solid;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.import-confirm-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-color: #10b981;
+  color: white;
+}
+
+.import-confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.import-cancel-btn {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.import-cancel-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+}
+

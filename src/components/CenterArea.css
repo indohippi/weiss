@@ -1,0 +1,384 @@
+/* CenterArea.css - Stunning Central Game Interface */
+
+.center-area {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 2px solid var(--border-light);
+  border-radius: 25px;
+  padding: 2rem;
+  position: relative;
+  overflow-y: auto;
+  max-height: calc(100vh - 300px);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.center-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.center-area::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.center-area::-webkit-scrollbar-thumb {
+  background: rgba(79, 158, 255, 0.5);
+  border-radius: 10px;
+}
+
+.center-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(79, 158, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: 23px;
+}
+
+.center-area:hover {
+  border-color: var(--border-medium);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Turn Indicator */
+.turn-indicator {
+  background: linear-gradient(135deg, rgba(79, 158, 255, 0.1), rgba(139, 92, 246, 0.1));
+  border: 2px solid rgba(79, 158, 255, 0.2);
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 8px 25px rgba(79, 158, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.turn-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+  position: relative;
+  z-index: 1;
+}
+
+.current-player {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* Phase Information */
+.phase-info {
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.phase-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.phase-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.75rem;
+}
+
+.phase-instructions {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+/* Battle Area - Enhanced */
+.battle-area {
+  background: rgba(239, 68, 68, 0.05);
+  border: 2px solid rgba(239, 68, 68, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  position: relative;
+  z-index: 2;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.battle-area.active {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+  animation: battlePulse 2s ease-in-out infinite;
+}
+
+@keyframes battlePulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
+  }
+}
+
+.battle-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ef4444;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.battle-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.battle-attacker,
+.battle-defender {
+  flex: 1;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.battle-attacker {
+  border-color: rgba(79, 158, 255, 0.5);
+  background: rgba(79, 158, 255, 0.1);
+}
+
+.battle-defender {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.battle-role {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.battle-card-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.battle-stats {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.battle-vs {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ef4444;
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+}
+
+.trigger-reveal {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.2));
+  border: 2px solid #f59e0b;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.trigger-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 5px;
+}
+
+.trigger-card-info {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.trigger-icon {
+  color: #f59e0b;
+}
+
+/* Center Actions */
+.center-actions {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+}
+
+.actions-header {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.center-action-button {
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 2px solid rgba(79, 158, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(79, 158, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.center-action-button:hover {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: #4f9eff;
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(79, 158, 255, 0.3);
+}
+
+/* Game Status */
+.game-status {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 1.5rem 0;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.status-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* Quick Phase Navigation */
+.quick-phases {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+}
+
+.quick-phases-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.quick-phase-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quick-phase-button {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 40px;
+}
+
+.quick-phase-button.active {
+  background: linear-gradient(135deg, #4f9eff, #3b82f6);
+  color: white;
+  border-color: #4f9eff;
+  box-shadow: 0 4px 12px rgba(79, 158, 255, 0.4);
+}
+
+.quick-phase-button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .center-area {
+    padding: 1.5rem;
+  }
+  
+  .turn-number {
+    font-size: 2rem;
+  }
+  
+  .current-player {
+    font-size: 1.1rem;
+  }
+  
+  .phase-name {
+    font-size: 1.5rem;
+  }
+  
+  .battle-info {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .battle-vs {
+    transform: rotate(90deg);
+  }
+  
+  .game-status {
+    grid-template-columns: 1fr;
+  }
+}

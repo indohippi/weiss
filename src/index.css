@@ -1,0 +1,259 @@
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #f39c12;
+  --accent-color: #e74c3c;
+  --background-dark: #1e3c72;
+  --background-light: #2a5298;
+  --text-light: #ffffff;
+  --text-dark: #2c3e50;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --border-radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--background-dark) 0%, var(--background-light) 100%);
+  color: var(--text-light);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.button {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  border-radius: var(--border-radius);
+  color: var(--text-light);
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--card-shadow);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.game-board {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  gap: 20px;
+  padding: 20px;
+}
+
+.player-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.center-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.hand-area {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 20px;
+  min-height: 200px;
+}
+
+.card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+
+.card-stack .card {
+  width: 80px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hand-card {
+  width: 100px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.hand-card .card-name {
+  font-size: 10px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.hand-card .card-level {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.field-card {
+  width: 90px;
+  height: 135px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.field-card .card-power {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background: var(--secondary-color);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.field-card .card-soul {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: var(--primary-color);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.energy-area {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  max-width: 200px;
+}
+
+.energy-card {
+  width: 40px;
+  height: 60px;
+  background: var(--secondary-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.clock-area {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  max-width: 200px;
+}
+
+.clock-card {
+  width: 40px;
+  height: 60px;
+  background: var(--accent-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.game-info {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(10px);
+}
+
+.turn-indicator {
+  background: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.phase-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.phase-button {
+  background: var(--secondary-color);
+  border: none;
+  border-radius: 6px;
+  color: var(--text-light);
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.phase-button:hover {
+  background: var(--accent-color);
+}
+
+.phase-button.active {
+  background: var(--accent-color);
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+

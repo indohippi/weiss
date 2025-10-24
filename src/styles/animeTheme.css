@@ -1,0 +1,323 @@
+/* Anime Theme - Inspired by Weiss Schwarz & Popular Card Games */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
+
+:root {
+  /* Anime-inspired color palette */
+  --anime-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --anime-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --anime-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --anime-gold: linear-gradient(135deg, #f7b733 0%, #fc4a1a 100%);
+  --anime-pink: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --anime-blue: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+  
+  /* Background colors */
+  --bg-dark: #0a0e27;
+  --bg-darker: #050816;
+  --bg-card: rgba(15, 20, 40, 0.8);
+  --bg-card-hover: rgba(20, 25, 50, 0.9);
+  
+  /* Text colors */
+  --text-glow: #ffffff;
+  --text-secondary: #b8c1ec;
+  --text-muted: #7b8cde;
+  
+  /* Neon glows */
+  --glow-blue: 0 0 20px rgba(79, 158, 255, 0.6);
+  --glow-pink: 0 0 20px rgba(250, 112, 154, 0.6);
+  --glow-purple: 0 0 20px rgba(139, 92, 246, 0.6);
+  --glow-cyan: 0 0 20px rgba(48, 207, 208, 0.6);
+  
+  /* Card game aesthetics */
+  --card-border: 2px solid;
+  --card-glow: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+  
+  /* Font */
+  --font-primary: 'Poppins', sans-serif;
+  --font-japanese: 'Noto Sans JP', sans-serif;
+}
+
+/* Animated gradient background */
+.anime-gradient-bg {
+  background: linear-gradient(-45deg, #0a0e27, #1a1f3a, #0f1433, #1e2749);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating particles effect */
+.anime-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.anime-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Glow text effect */
+.anime-text-glow {
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(79, 158, 255, 0.6),
+    0 0 30px rgba(139, 92, 246, 0.4);
+  animation: textGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px rgba(79, 158, 255, 0.6),
+      0 0 30px rgba(139, 92, 246, 0.4);
+  }
+  100% {
+    text-shadow: 
+      0 0 20px rgba(255, 255, 255, 1),
+      0 0 30px rgba(79, 158, 255, 0.8),
+      0 0 40px rgba(139, 92, 246, 0.6);
+  }
+}
+
+/* Holographic card effect */
+.anime-holographic {
+  position: relative;
+  overflow: hidden;
+}
+
+.anime-holographic::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  animation: holographicShine 3s linear infinite;
+}
+
+@keyframes holographicShine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Pulse animation for buttons */
+.anime-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Border glow animation */
+.anime-border-glow {
+  position: relative;
+  border: 2px solid transparent;
+  background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+              linear-gradient(135deg, #667eea, #764ba2, #f093fb, #667eea) border-box;
+  animation: borderRotate 3s linear infinite;
+}
+
+@keyframes borderRotate {
+  0% {
+    background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                linear-gradient(0deg, #667eea, #764ba2, #f093fb, #667eea) border-box;
+  }
+  100% {
+    background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                linear-gradient(360deg, #667eea, #764ba2, #f093fb, #667eea) border-box;
+  }
+}
+
+/* Card rarity shimmer */
+.anime-rarity-common { border-color: #9ca3af !important; }
+.anime-rarity-uncommon { border-color: #10b981 !important; }
+.anime-rarity-rare { 
+  border-color: #3b82f6 !important;
+  box-shadow: var(--glow-blue);
+}
+.anime-rarity-super-rare { 
+  border-color: #8b5cf6 !important;
+  box-shadow: var(--glow-purple);
+}
+.anime-rarity-ultra-rare { 
+  border-color: #f59e0b !important;
+  box-shadow: var(--glow-pink);
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { 
+    filter: brightness(1) saturate(1);
+  }
+  50% { 
+    filter: brightness(1.3) saturate(1.5);
+  }
+}
+
+/* Sakura petal animation */
+.anime-sakura {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, #ffc0cb 0%, #ff69b4 100%);
+  opacity: 0.6;
+  border-radius: 50% 0 50% 0;
+  animation: sakuraFall linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes sakuraFall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Energy orb effect for buttons */
+.anime-energy-orb {
+  position: relative;
+  overflow: visible;
+}
+
+.anime-energy-orb::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(79, 158, 255, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: energyPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes energyPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 1;
+  }
+}
+
+/* Star burst effect */
+.anime-star-burst {
+  position: relative;
+}
+
+.anime-star-burst::before {
+  content: '✨';
+  position: absolute;
+  font-size: 1.5rem;
+  animation: starBurst 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes starBurst {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) rotate(180deg);
+  }
+}
+
+/* Neon box shadow variations */
+.anime-neon-blue {
+  box-shadow: 
+    0 0 5px rgba(79, 158, 255, 0.5),
+    0 0 10px rgba(79, 158, 255, 0.4),
+    0 0 20px rgba(79, 158, 255, 0.3),
+    inset 0 0 10px rgba(79, 158, 255, 0.2);
+}
+
+.anime-neon-pink {
+  box-shadow: 
+    0 0 5px rgba(250, 112, 154, 0.5),
+    0 0 10px rgba(250, 112, 154, 0.4),
+    0 0 20px rgba(250, 112, 154, 0.3),
+    inset 0 0 10px rgba(250, 112, 154, 0.2);
+}
+
+.anime-neon-purple {
+  box-shadow: 
+    0 0 5px rgba(139, 92, 246, 0.5),
+    0 0 10px rgba(139, 92, 246, 0.4),
+    0 0 20px rgba(139, 92, 246, 0.3),
+    inset 0 0 10px rgba(139, 92, 246, 0.2);
+}
+
+.anime-neon-cyan {
+  box-shadow: 
+    0 0 5px rgba(48, 207, 208, 0.5),
+    0 0 10px rgba(48, 207, 208, 0.4),
+    0 0 20px rgba(48, 207, 208, 0.3),
+    inset 0 0 10px rgba(48, 207, 208, 0.2);
+}
+
