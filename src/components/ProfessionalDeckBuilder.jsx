@@ -18,42 +18,6 @@ const ProfessionalDeckBuilder = ({ allCards, cardsLoading, onBack }) => {
 
   // Get unique sets for filter - use the expansion field from GitHub database
   const uniqueSets = [...new Set(allCards.map(card => card.expansion).filter(Boolean))].sort()
-  
-  // Debug: Log available sets
-  console.log('Available sets:', uniqueSets)
-  console.log('First 10 sets:', uniqueSets.slice(0, 10))
-  
-  // Debug: Check for Nikke specifically
-  const nikkeSets = uniqueSets.filter(set => 
-    set.toLowerCase().includes('nikke') || 
-    set.toLowerCase().includes('goddess') || 
-    set.toLowerCase().includes('victory')
-  )
-  console.log('Nikke-related sets found:', nikkeSets)
-  
-  // Debug: Check what expansion field actually contains
-  const sampleCards = allCards.slice(0, 5)
-  console.log('Sample card expansion fields:', sampleCards.map(c => ({ 
-    name: c.name, 
-    expansion: c.expansion,
-    originalExpansion: c.originalData?.expansion 
-  })))
-  
-  // Debug: Check for Nikke-related cards
-  const nikkeCards = allCards.filter(card => 
-    card.name?.toLowerCase().includes('nikke') || 
-    card.expansion?.toLowerCase().includes('nikke') ||
-    card.series?.toLowerCase().includes('nikke')
-  )
-  console.log('Nikke-related cards found:', nikkeCards.length, nikkeCards.map(c => ({ name: c.name, expansion: c.expansion, series: c.series })))
-  
-  // Debug: Check a few sample cards to see their structure
-  console.log('Sample card structure:', allCards.slice(0, 3).map(c => ({ 
-    name: c.name, 
-    expansion: c.expansion, 
-    series: c.series,
-    originalData: c.originalData 
-  })))
 
   // Filter cards based on search and filters
   const filteredCards = allCards.filter(card => {
