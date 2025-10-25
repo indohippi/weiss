@@ -303,7 +303,8 @@
   font-weight: 600;
 }
 
-.stage-position .card {
+.stage-position .card,
+.stage-position .improved-card {
   width: 140px !important;
   height: 200px !important;
   margin: 0 !important;
@@ -421,13 +422,15 @@
   filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8));
 }
 
-.hand-card .card {
+.hand-card .card,
+.hand-card .improved-card {
   width: 140px !important;
   height: 200px !important;
   margin: 0 !important;
 }
 
-.hand-card .card.can-clock {
+.hand-card .card.can-clock,
+.hand-card .improved-card.can-clock {
   animation: clockPulse 2s ease-in-out infinite;
 }
 
@@ -693,12 +696,14 @@
     min-width: 120px;
   }
   
-  .stage-position .card {
+  .stage-position .card,
+  .stage-position .improved-card {
     width: 110px !important;
     height: 158px !important;
   }
   
-  .hand-card .card {
+  .hand-card .card,
+  .hand-card .improved-card {
     width: 110px !important;
     height: 158px !important;
   }

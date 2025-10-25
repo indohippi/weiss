@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from './Card'
+import ImprovedCard from './ImprovedCard'
 import './GameBoard.css'
 
 const GameBoard = ({
@@ -15,8 +16,63 @@ const GameBoard = ({
     return <div className="game-board-loading">Loading game board...</div>
   }
 
-  const currentPlayer = gameState.players.find(p => p.turn) || gameState.players[0]
-  const opponentPlayer = gameState.players.find(p => !p.turn) || gameState.players[1]
+  // Force re-evaluation of player selection
+  const allPlayers = gameState.players || []
+  const currentPlayer = allPlayers.find(p => p.turn) || allPlayers[0]
+  const opponentPlayer = allPlayers.find(p => !p.turn) || allPlayers[1]
+  
+  // Additional safety checks
+  if (!currentPlayer) {
+    console.error('❌ No current player found!', { allPlayers })
+    return <div className="game-board-error">Error: No current player found</div>
+  }
+  
+  if (!currentPlayer.hand) {
+    console.error('❌ Current player has no hand!', { currentPlayer })
+    return <div className="game-board-error">Error: Player has no hand</div>
+  }
+  
+  // Debug logging
+  console.log('🎯 GameBoard render:', {
+    currentPlayer: currentPlayer.name,
+    currentPlayerHand: currentPlayer.hand.length,
+    currentPlayerDeck: currentPlayer.deck.length,
+    opponentPlayer: opponentPlayer.name,
+    opponentPlayerHand: opponentPlayer.hand.length,
+    opponentPlayerDeck: opponentPlayer.deck.length,
+    currentPhase,
+    currentPlayerHandCards: currentPlayer.hand.map(c => ({ 
+      name: c.name, 
+      type: c.type, 
+      level: c.level, 
+      series: c.series,
+      image: c.image ? 'has image' : 'no image',
+      fromDatabase: c.series && c.series !== 'Trial'
+    })),
+    opponentPlayerHandCards: opponentPlayer.hand.map(c => ({ 
+      name: c.name, 
+      type: c.type, 
+      level: c.level, 
+      series: c.series,
+      image: c.image ? 'has image' : 'no image',
+      fromDatabase: c.series && c.series !== 'Trial'
+    })),
+    gameStatePlayers: gameState.players.map(p => ({
+      name: p.name,
+      turn: p.turn,
+      handLength: p.hand.length
+    }))
+  })
+  
+  // CRITICAL DEBUG: Check if cards are actually being passed
+  console.log('🚨 CRITICAL DEBUG - Hand Array:', {
+    handExists: !!currentPlayer.hand,
+    handLength: currentPlayer.hand?.length,
+    handType: typeof currentPlayer.hand,
+    isArray: Array.isArray(currentPlayer.hand),
+    firstCard: currentPlayer.hand?.[0],
+    allCards: currentPlayer.hand
+  })
 
   const renderZone = (player, zoneName, cards, showBack = false) => {
     const count = Array.isArray(cards) ? cards.length : (cards || 0)
@@ -34,7 +90,7 @@ const GameBoard = ({
               </div>
             ) : (
               cardsArray.slice(-3).map((card, index) => (
-                <Card
+                <ImprovedCard
                   key={`${zoneName}-${card.id}-${index}`}
                   card={card}
                   showDetails={false}
@@ -63,7 +119,7 @@ const GameBoard = ({
       >
         <div className="position-label">{posLabel}</div>
         {card ? (
-          <Card
+          <ImprovedCard
             card={card}
             showDetails={true}
             showState={true}
@@ -117,7 +173,7 @@ const GameBoard = ({
               <div className="zone-label">Climax</div>
               <div className="zone-cards">
                 {opponentPlayer.climaxArea ? (
-                  <Card card={opponentPlayer.climaxArea} showDetails={true} />
+                  <ImprovedCard card={opponentPlayer.climaxArea} showDetails={true} />
                 ) : (
                   <div className="zone-empty">-</div>
                 )}
@@ -210,28 +266,116 @@ const GameBoard = ({
             <span className="hand-limit">{currentPlayer.hand.length} / 7</span>
           </div>
           <div className="hand-cards-display">
-            {currentPlayer.hand.length > 0 ? (
-              currentPlayer.hand.map((card, index) => (
-                <div
-                  key={`hand-${card.id}-${index}`}
-                  className={`hand-card ${selectedCard?.card?.id === card.id ? 'selected' : ''}`}
-                  onClick={() => {
-                    if (currentPhase === 'clock') {
-                      onCardAction('clock', card, 'hand')
-                    } else {
-                      onCardSelect(card, 'hand')
-                    }
-                  }}
-                >
-                  <Card
-                    card={card}
-                    showDetails={true}
-                    className={currentPhase === 'clock' ? 'can-clock' : ''}
-                  />
+            {/* DIRECT CARD RENDERING - BYPASS ALL LOGIC */}
+            <div style={{
+              position: 'absolute',
+              top: '-100px',
+              left: '0',
+              background: 'rgba(255,255,0,0.9)',
+              color: 'black',
+              padding: '10px',
+              borderRadius: '4px',
+              fontSize: '12px',
+              zIndex: 1003,
+              fontWeight: 'bold'
+            }}>
+              🚨 DIRECT RENDER: {currentPlayer.hand.length} cards<br/>
+              Player: {currentPlayer.name}<br/>
+              Turn: {currentPlayer.turn ? 'YES' : 'NO'}
+            </div>
+            
+            {/* FORCE RENDER ALL CARDS - NO CONDITIONS */}
+            {currentPlayer.hand.map((card, index) => (
+              <div
+                key={`force-hand-${card.id}-${index}`}
+                style={{
+                  width: '140px',
+                  height: '200px',
+                  background: 'linear-gradient(145deg, #ffffff, #f8f9fa)',
+                  border: '2px solid #4f9eff',
+                  borderRadius: '12px',
+                  margin: '8px',
+                  padding: '10px',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                }}
+                onClick={() => {
+                  if (currentPhase === 'clock') {
+                    onCardAction('clock', card, 'hand')
+                  } else {
+                    onCardSelect(card, 'hand')
+                  }
+                }}
+              >
+                {/* Card Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ background: '#374151', color: 'white', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>
+                    L{card.level}
+                  </div>
+                  <div style={{ background: '#6b7280', color: 'white', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>
+                    C{card.cost}
+                  </div>
                 </div>
-              ))
-            ) : (
-              <div className="hand-empty">No cards in hand</div>
+                
+                {/* Card Name */}
+                <div style={{ fontSize: '14px', fontWeight: '700', color: '#1f2937', textAlign: 'center', lineHeight: '1.2' }}>
+                  {card.name}
+                </div>
+                
+                {/* Card Stats */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'auto' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '10px', color: '#6b7280', fontWeight: '600' }}>PWR</div>
+                    <div style={{ fontSize: '16px', fontWeight: '700', color: '#ef4444' }}>{card.power}</div>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '10px', color: '#6b7280', fontWeight: '600' }}>SOUL</div>
+                    <div style={{ fontSize: '16px', fontWeight: '700', color: '#3b82f6' }}>{card.soul}</div>
+                  </div>
+                </div>
+                
+                {/* Card Type */}
+                <div style={{ fontSize: '10px', color: '#6b7280', textAlign: 'center', fontStyle: 'italic' }}>
+                  {card.type}
+                </div>
+                
+                {/* Debug overlay */}
+                <div style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  background: 'rgba(255,0,0,0.8)',
+                  color: 'white',
+                  fontSize: '8px',
+                  padding: '2px',
+                  borderRadius: '0 0 4px 0',
+                  zIndex: 1000
+                }}>
+                  #{index + 1}
+                </div>
+              </div>
+            ))}
+            
+            {/* Fallback message if no cards */}
+            {currentPlayer.hand.length === 0 && (
+              <div style={{
+                width: '100%',
+                height: '200px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'rgba(0,0,0,0.5)',
+                borderRadius: '12px',
+                color: 'white',
+                fontSize: '16px',
+                fontWeight: 'bold'
+              }}>
+                NO CARDS IN HAND
+              </div>
             )}
           </div>
         </div>
@@ -262,7 +406,7 @@ const GameBoard = ({
               <div className="zone-label">Climax</div>
               <div className="zone-cards">
                 {currentPlayer.climaxArea ? (
-                  <Card card={currentPlayer.climaxArea} showDetails={true} />
+                  <ImprovedCard card={currentPlayer.climaxArea} showDetails={true} />
                 ) : (
                   <div className="zone-empty">-</div>
                 )}

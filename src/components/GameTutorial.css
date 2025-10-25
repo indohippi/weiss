@@ -1,0 +1,414 @@
+/* Game Tutorial - Modern Card Game Style */
+
+.tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tutorial-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+.tutorial-modal {
+  position: relative;
+  background: linear-gradient(145deg, #1a1f3a, #0a0e27);
+  border: 2px solid #4f9eff;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: tutorial-slide-in 0.5s ease-out;
+}
+
+@keyframes tutorial-slide-in {
+  0% { 
+    transform: scale(0.8) translateY(50px);
+    opacity: 0;
+  }
+  100% { 
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.tutorial-modal.center {
+  transform: translateY(0);
+}
+
+.tutorial-modal.top {
+  transform: translateY(-20vh);
+}
+
+.tutorial-modal.bottom {
+  transform: translateY(20vh);
+}
+
+.tutorial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: linear-gradient(90deg, #4f9eff, #8b5cf6);
+  border-bottom: 2px solid rgba(79, 158, 255, 0.3);
+}
+
+.tutorial-progress {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.tutorial-close {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tutorial-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.tutorial-content {
+  padding: 30px;
+  color: white;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.tutorial-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4f9eff;
+  text-shadow: 0 0 20px rgba(79, 158, 255, 0.5);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.tutorial-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.tutorial-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Tutorial-specific content */
+.tutorial-phases {
+  margin: 20px 0;
+}
+
+.phase-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.phase-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.phase-item.current {
+  border-color: #4f9eff;
+  background: rgba(79, 158, 255, 0.1);
+  box-shadow: 0 0 20px rgba(79, 158, 255, 0.3);
+}
+
+.phase-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #4f9eff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.phase-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+}
+
+.tutorial-hand-demo {
+  margin: 20px 0;
+}
+
+.demo-cards {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.demo-card {
+  width: 60px;
+  height: 90px;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+  border: 2px solid #4f9eff;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #1f2937;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.demo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(79, 158, 255, 0.4);
+}
+
+.demo-card-level {
+  font-size: 10px;
+  font-weight: 700;
+  background: #374151;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.demo-card-name {
+  font-size: 8px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.demo-text {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-style: italic;
+}
+
+.tutorial-stage-demo {
+  margin: 20px 0;
+}
+
+.demo-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.demo-back-row, .demo-front-row {
+  display: flex;
+  gap: 10px;
+}
+
+.demo-slot {
+  width: 80px;
+  height: 120px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+}
+
+.tutorial-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tutorial-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.tutorial-btn.primary {
+  background: linear-gradient(145deg, #4f9eff, #3b82f6);
+  color: white;
+  box-shadow: 0 4px 12px rgba(79, 158, 255, 0.3);
+}
+
+.tutorial-btn.primary:hover {
+  background: linear-gradient(145deg, #3b82f6, #2563eb);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(79, 158, 255, 0.4);
+}
+
+.tutorial-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tutorial-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.tutorial-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.tutorial-btn:disabled:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tutorial-modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .tutorial-header {
+    padding: 15px 20px;
+  }
+  
+  .tutorial-content {
+    padding: 20px;
+  }
+  
+  .tutorial-title {
+    font-size: 1.5rem;
+  }
+  
+  .progress-bar {
+    width: 150px;
+  }
+  
+  .phase-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .demo-cards {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .demo-card {
+    width: 50px;
+    height: 75px;
+  }
+  
+  .demo-slot {
+    width: 60px;
+    height: 90px;
+  }
+  
+  .tutorial-actions {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 20px;
+  }
+  
+  .tutorial-btn {
+    width: 100%;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tutorial-modal {
+    width: 98%;
+    max-height: 95vh;
+  }
+  
+  .tutorial-title {
+    font-size: 1.3rem;
+  }
+  
+  .tutorial-text {
+    font-size: 0.9rem;
+  }
+  
+  .phase-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .demo-cards {
+    gap: 5px;
+  }
+  
+  .demo-card {
+    width: 45px;
+    height: 68px;
+  }
+}

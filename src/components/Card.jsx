@@ -12,6 +12,17 @@ const Card = ({
   if (!card) {
     return <div className={`card empty-card ${className}`}>No Card</div>
   }
+  
+  // Debug logging for card rendering
+  console.log('🃏 Card render:', {
+    name: card.name,
+    type: card.type,
+    level: card.level,
+    power: card.power,
+    soul: card.soul,
+    showDetails,
+    showState
+  })
 
   const handleClick = () => {
     if (onClick) {

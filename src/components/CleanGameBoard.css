@@ -1,0 +1,293 @@
+/* Clean Game Board - Simple and Functional */
+
+.game-board {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Loading and Error States */
+.game-board-loading,
+.game-board-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: #4f9eff;
+  text-align: center;
+}
+
+.game-board-error {
+  color: #ef4444;
+}
+
+/* Opponent Area */
+.opponent-area {
+  flex: 1;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.1) 0%, transparent 100%);
+  border-bottom: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.player-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.player-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.player-stats span {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+/* Stage Areas */
+.stage-area {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stage-row {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.stage-slot {
+  width: 140px;
+  height: 200px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.stage-slot:has(.card) {
+  border: 2px solid rgba(79, 158, 255, 0.6);
+  background: rgba(79, 158, 255, 0.1);
+}
+
+.empty-slot {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.empty-slot.can-place {
+  border: 2px dashed #4f9eff;
+  background: rgba(79, 158, 255, 0.1);
+  color: #4f9eff;
+  cursor: pointer;
+  animation: pulse-place 2s infinite;
+}
+
+@keyframes pulse-place {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Zones */
+.zones-area {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-width: 80px;
+}
+
+.zone-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.zone-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4f9eff;
+  text-shadow: 0 0 10px rgba(79, 158, 255, 0.5);
+}
+
+/* Center Area */
+.center-area {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(90deg, transparent 0%, rgba(79, 158, 255, 0.1) 50%, transparent 100%);
+}
+
+.phase-display {
+  text-align: center;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(79, 158, 255, 0.3);
+}
+
+.phase-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4f9eff;
+  text-shadow: 0 0 20px rgba(79, 158, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.phase-description {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+/* Current Player Area */
+.current-player-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: linear-gradient(0deg, rgba(79, 158, 255, 0.1) 0%, transparent 100%);
+  border-top: 2px solid rgba(79, 158, 255, 0.3);
+}
+
+/* Hand Area */
+.hand-area {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(79, 158, 255, 0.3);
+}
+
+.hand-header {
+  margin-bottom: 15px;
+}
+
+.hand-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #4f9eff;
+  text-shadow: 0 0 10px rgba(79, 158, 255, 0.5);
+}
+
+.hand-cards {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 0;
+  min-height: 220px;
+  align-items: center;
+}
+
+.hand-card {
+  flex-shrink: 0;
+  width: 140px;
+  height: 200px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.hand-card:hover {
+  transform: translateY(-10px);
+  z-index: 10;
+}
+
+.hand-card .card.can-clock {
+  animation: clock-pulse 2s ease-in-out infinite;
+}
+
+@keyframes clock-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.9);
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .stage-slot {
+    width: 120px;
+    height: 170px;
+  }
+  
+  .hand-card {
+    width: 120px;
+    height: 170px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-board {
+    padding: 10px;
+  }
+  
+  .stage-slot {
+    width: 100px;
+    height: 140px;
+  }
+  
+  .hand-card {
+    width: 100px;
+    height: 140px;
+  }
+  
+  .phase-name {
+    font-size: 1.5rem;
+  }
+  
+  .zones-area {
+    gap: 10px;
+  }
+  
+  .zone {
+    padding: 10px;
+    min-width: 60px;
+  }
+}

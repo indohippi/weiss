@@ -1,0 +1,304 @@
+/* GameplayTools.css */
+.gameplay-tools {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1e 100%);
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.tools-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #4f9eff;
+}
+
+.tools-header h1 {
+  color: #4f9eff;
+  margin: 0;
+  font-size: 2.5rem;
+  text-shadow: 0 0 20px rgba(79, 158, 255, 0.5);
+}
+
+.back-button {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+}
+
+.back-button:hover {
+  background: #ff3742;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tool-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #4f9eff;
+  border-radius: 15px;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(79, 158, 255, 0.2);
+  border-color: #66b3ff;
+}
+
+.tool-card h3 {
+  color: #4f9eff;
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(79, 158, 255, 0.3);
+}
+
+/* Life Counter */
+.life-display {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.player-life {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #666;
+}
+
+.player-life h4 {
+  color: #4f9eff;
+  margin: 0 0 15px 0;
+}
+
+.life-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.life-btn {
+  background: #4f9eff;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.life-btn:hover {
+  background: #66b3ff;
+  transform: scale(1.1);
+}
+
+.life-btn.decrease {
+  background: #ff4757;
+}
+
+.life-btn.decrease:hover {
+  background: #ff3742;
+}
+
+.life-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4f9eff;
+  min-width: 50px;
+  text-align: center;
+}
+
+.reset-button {
+  width: 100%;
+  background: #ffa500;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+  background: #ff8c00;
+  transform: translateY(-2px);
+}
+
+/* Phase Tracker */
+.current-phase {
+  background: rgba(79, 158, 255, 0.1);
+  border: 1px solid #4f9eff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.current-phase h4 {
+  color: #4f9eff;
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+}
+
+.current-phase p {
+  margin: 0;
+  color: #ccc;
+  font-style: italic;
+}
+
+.phase-controls {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.next-phase-btn {
+  background: linear-gradient(135deg, #4f9eff, #66b3ff);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(79, 158, 255, 0.3);
+}
+
+.next-phase-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(79, 158, 255, 0.4);
+}
+
+.game-info {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+}
+
+.game-info p {
+  margin: 5px 0;
+  color: #e0e0e0;
+}
+
+/* Phase Reference */
+.phases-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.phase-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #333;
+  transition: all 0.2s ease;
+}
+
+.phase-item.active {
+  background: rgba(79, 158, 255, 0.2);
+  border-color: #4f9eff;
+  box-shadow: 0 0 15px rgba(79, 158, 255, 0.3);
+}
+
+.phase-number {
+  background: #4f9eff;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.phase-details strong {
+  color: #4f9eff;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.phase-details p {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+/* Quick Reference */
+.reference-items {
+  display: grid;
+  gap: 10px;
+}
+
+.ref-item {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid #4f9eff;
+  color: #e0e0e0;
+}
+
+.ref-item strong {
+  color: #4f9eff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .tools-header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .tools-header h1 {
+    font-size: 2rem;
+  }
+  
+  .life-display {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

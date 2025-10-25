@@ -1,0 +1,383 @@
+/* Retro Tactical Theme - SNES/Metal Gear Solid Style */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono:wght@400&display=swap');
+
+:root {
+  /* Retro Tactical Color Palette */
+  --tactical-dark: #0a0a0a;
+  --tactical-darker: #050505;
+  --tactical-green: #00ff41;
+  --tactical-amber: #ffaa00;
+  --tactical-red: #ff0040;
+  --tactical-blue: #0080ff;
+  --tactical-gray: #404040;
+  --tactical-light-gray: #808080;
+  --tactical-white: #e0e0e0;
+  
+  /* Tactical Gradients */
+  --tactical-bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  --tactical-panel: linear-gradient(145deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+  --tactical-border: linear-gradient(90deg, #00ff41, #0080ff, #ffaa00);
+  
+  /* Retro Typography */
+  --font-primary: 'Orbitron', monospace;
+  --font-mono: 'Share Tech Mono', monospace;
+  
+  /* Tactical Shadows */
+  --shadow-tactical: 0 0 20px rgba(0, 255, 65, 0.3);
+  --shadow-panel: 0 8px 32px rgba(0, 0, 0, 0.8);
+  --shadow-glow: 0 0 30px rgba(0, 255, 65, 0.5);
+}
+
+/* Global Retro Tactical Styles */
+.retro-tactical {
+  font-family: var(--font-primary);
+  background: var(--tactical-bg);
+  color: var(--tactical-white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Tactical Panel Base */
+.tactical-panel {
+  background: var(--tactical-panel);
+  border: 2px solid var(--tactical-green);
+  border-radius: 0;
+  box-shadow: var(--shadow-panel);
+  position: relative;
+  overflow: hidden;
+}
+
+.tactical-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tactical-border);
+  animation: tactical-scan 3s linear infinite;
+}
+
+@keyframes tactical-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Tactical Buttons */
+.tactical-btn {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border: 2px solid var(--tactical-green);
+  color: var(--tactical-white);
+  font-family: var(--font-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 24px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.tactical-btn:hover {
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+  border-color: var(--tactical-amber);
+  color: var(--tactical-amber);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-tactical);
+}
+
+.tactical-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.tactical-btn.primary {
+  background: linear-gradient(145deg, #00ff41, #00cc33);
+  color: var(--tactical-dark);
+  border-color: var(--tactical-green);
+}
+
+.tactical-btn.primary:hover {
+  background: linear-gradient(145deg, #00ff55, #00ff41);
+  box-shadow: var(--shadow-glow);
+}
+
+.tactical-btn.danger {
+  background: linear-gradient(145deg, #ff0040, #cc0033);
+  color: var(--tactical-white);
+  border-color: var(--tactical-red);
+}
+
+.tactical-btn.danger:hover {
+  background: linear-gradient(145deg, #ff0055, #ff0040);
+  box-shadow: 0 0 20px rgba(255, 0, 64, 0.5);
+}
+
+/* Tactical Headers */
+.tactical-header {
+  background: linear-gradient(90deg, var(--tactical-green), var(--tactical-blue));
+  color: var(--tactical-dark);
+  font-family: var(--font-primary);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 15px 20px;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+
+.tactical-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tactical-border);
+}
+
+/* Tactical Grid */
+.tactical-grid {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+}
+
+.tactical-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.tactical-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.tactical-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Tactical Cards */
+.tactical-card {
+  background: var(--tactical-panel);
+  border: 1px solid var(--tactical-gray);
+  border-radius: 0;
+  padding: 20px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-panel);
+}
+
+.tactical-card:hover {
+  border-color: var(--tactical-green);
+  box-shadow: var(--shadow-tactical);
+  transform: translateY(-2px);
+}
+
+.tactical-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--tactical-green);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tactical-card:hover::before {
+  opacity: 1;
+}
+
+/* Tactical Inputs */
+.tactical-input {
+  background: var(--tactical-darker);
+  border: 2px solid var(--tactical-gray);
+  color: var(--tactical-white);
+  font-family: var(--font-mono);
+  padding: 12px 16px;
+  border-radius: 0;
+  transition: all 0.3s ease;
+}
+
+.tactical-input:focus {
+  border-color: var(--tactical-green);
+  box-shadow: var(--shadow-tactical);
+  outline: none;
+}
+
+.tactical-input::placeholder {
+  color: var(--tactical-light-gray);
+  font-style: italic;
+}
+
+/* Tactical Status Indicators */
+.tactical-status {
+  display: inline-block;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 0;
+}
+
+.tactical-status.online {
+  background: var(--tactical-green);
+  color: var(--tactical-dark);
+}
+
+.tactical-status.warning {
+  background: var(--tactical-amber);
+  color: var(--tactical-dark);
+}
+
+.tactical-status.error {
+  background: var(--tactical-red);
+  color: var(--tactical-white);
+}
+
+/* Tactical Progress Bars */
+.tactical-progress {
+  background: var(--tactical-darker);
+  border: 1px solid var(--tactical-gray);
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tactical-progress-bar {
+  background: linear-gradient(90deg, var(--tactical-green), var(--tactical-blue));
+  height: 100%;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.tactical-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: tactical-shine 2s linear infinite;
+}
+
+@keyframes tactical-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Tactical Data Tables */
+.tactical-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+.tactical-table th {
+  background: var(--tactical-green);
+  color: var(--tactical-dark);
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tactical-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--tactical-gray);
+  transition: background 0.3s ease;
+}
+
+.tactical-table tr:hover td {
+  background: rgba(0, 255, 65, 0.1);
+}
+
+/* Tactical Loading */
+.tactical-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  color: var(--tactical-green);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.tactical-loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--tactical-gray);
+  border-top: 2px solid var(--tactical-green);
+  border-radius: 50%;
+  margin-left: 10px;
+  animation: tactical-spin 1s linear infinite;
+}
+
+@keyframes tactical-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Tactical Animations */
+@keyframes tactical-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes tactical-glow {
+  0%, 100% { box-shadow: 0 0 5px var(--tactical-green); }
+  50% { box-shadow: 0 0 20px var(--tactical-green), 0 0 30px var(--tactical-green); }
+}
+
+.tactical-pulse {
+  animation: tactical-pulse 2s ease-in-out infinite;
+}
+
+.tactical-glow {
+  animation: tactical-glow 2s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tactical-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 15px;
+  }
+  
+  .tactical-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .tactical-header {
+    font-size: 18px;
+    padding: 12px 16px;
+  }
+}
+
+/* Tactical Scrollbars */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--tactical-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--tactical-green);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tactical-amber);
+}

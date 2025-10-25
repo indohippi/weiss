@@ -1,0 +1,434 @@
+/* Retro Card Component - SNES/Metal Gear Solid Style */
+
+.retro-card {
+  width: 200px;
+  height: 280px;
+  perspective: 1000px;
+  cursor: pointer;
+  position: relative;
+  font-family: var(--font-primary);
+}
+
+.card-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+  border: 2px solid var(--card-color, #00ff41);
+  border-radius: 0;
+  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.retro-card:hover .card-container {
+  transform: rotateY(5deg) rotateX(5deg);
+  box-shadow: 0 20px 40px rgba(0, 255, 65, 0.3);
+}
+
+.retro-card.selected .card-container {
+  border-color: #ffaa00;
+  box-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, var(--card-color, #00ff41), rgba(0, 0, 0, 0.8));
+  border-bottom: 1px solid var(--card-color, #00ff41);
+  position: relative;
+  height: 40px;
+}
+
+.card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--card-color, #00ff41);
+  animation: header-scan 2s linear infinite;
+}
+
+@keyframes header-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.card-level {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 4px 8px;
+  border: 1px solid var(--card-color, #00ff41);
+  border-radius: 0;
+}
+
+.level-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--card-color, #00ff41);
+  text-shadow: 0 0 5px currentColor;
+}
+
+.card-type {
+  flex: 1;
+  text-align: center;
+}
+
+.type-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--tactical-white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-cost {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 4px 8px;
+  border: 1px solid var(--card-color, #00ff41);
+  border-radius: 0;
+}
+
+.cost-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--card-color, #00ff41);
+}
+
+/* Card Image */
+.card-image-container {
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+  background: var(--tactical-darker);
+  border-bottom: 1px solid var(--card-color, #00ff41);
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+  position: relative;
+}
+
+.card-image-placeholder::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.1) 2px,
+    rgba(0, 255, 65, 0.1) 4px
+  );
+}
+
+.placeholder-icon {
+  font-size: 2rem;
+  color: var(--card-color, #00ff41);
+  z-index: 1;
+  position: relative;
+}
+
+/* Card Body */
+.card-body {
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-name {
+  margin-bottom: 8px;
+}
+
+.card-name h3 {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--tactical-white);
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Card Stats */
+.card-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 6px;
+  border: 1px solid var(--card-color, #00ff41);
+  border-radius: 0;
+  flex: 1;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--tactical-light-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--card-color, #00ff41);
+  text-shadow: 0 0 5px currentColor;
+}
+
+/* Card Traits */
+.card-traits {
+  margin-bottom: 8px;
+}
+
+.traits-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--tactical-light-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.traits-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.trait-tag {
+  background: rgba(0, 255, 65, 0.2);
+  border: 1px solid var(--card-color, #00ff41);
+  padding: 2px 4px;
+  font-size: 8px;
+  color: var(--card-color, #00ff41);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Card Ability */
+.card-ability {
+  margin-bottom: 8px;
+}
+
+.ability-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--tactical-light-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.ability-text {
+  font-size: 10px;
+  color: var(--tactical-white);
+  line-height: 1.3;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Card Footer */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid var(--card-color, #00ff41);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--tactical-light-gray);
+}
+
+.set-text, .id-text {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Selection Indicator */
+.selection-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.selection-border {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #ffaa00;
+  border-radius: 0;
+  animation: selection-pulse 1s ease-in-out infinite;
+}
+
+@keyframes selection-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.selection-glow {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(45deg, transparent, rgba(255, 170, 0, 0.3), transparent);
+  border-radius: 0;
+  animation: selection-glow 2s ease-in-out infinite;
+}
+
+@keyframes selection-glow {
+  0%, 100% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hover Effects */
+.hover-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--card-color, #00ff41), transparent);
+  animation: scan-line-move 1s linear infinite;
+}
+
+@keyframes scan-line-move {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(280px); }
+}
+
+.glow-effect {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+  border-radius: 0;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Empty Card */
+.empty-card .card-container {
+  border-color: #808080;
+  background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+}
+
+.empty-card .card-image-placeholder {
+  background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+}
+
+.empty-card .placeholder-icon {
+  color: #808080;
+  font-size: 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .retro-card {
+    width: 160px;
+    height: 224px;
+  }
+  
+  .card-body {
+    padding: 8px;
+  }
+  
+  .card-name h3 {
+    font-size: 12px;
+  }
+  
+  .stat-value {
+    font-size: 10px;
+  }
+  
+  .ability-text {
+    font-size: 9px;
+  }
+}
+
+/* Animation Variants */
+.retro-card.entering {
+  animation: card-enter 0.5s ease-out;
+}
+
+@keyframes card-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.retro-card.exiting {
+  animation: card-exit 0.3s ease-in;
+}
+
+@keyframes card-exit {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+}

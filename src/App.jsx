@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import MainMenu from './components/MainMenu'
 import DeckBuilder from './components/DeckBuilder'
-import GameBoard from './components/GameBoard'
+import CleanGameBoard from './components/CleanGameBoard'
 import GameInfo from './components/GameInfo'
 import ShortcutGuide from './components/ShortcutGuide'
 import PhaseNotification from './components/PhaseNotification'
+import GameTutorial from './components/GameTutorial'
 import { loadAllCards } from './services/cardDataLoader'
 import { 
   performMulligan, 
-  checkWinCondition,
-  shuffleDeck
+  checkWinCondition
 } from './gameLogic/gameState'
+import { 
+  simpleInitializeGame,
+  simpleDrawCards,
+  simplePlayCard,
+  simpleClockCard
+} from './gameLogic/simpleGameLogic'
 import {
   executeStandPhase,
   executeDrawPhase,
@@ -97,6 +103,7 @@ function App() {
   const [selectedStagePosition, setSelectedStagePosition] = useState(null)
   const [showPhaseNotification, setShowPhaseNotification] = useState(false)
   const [notificationPhase, setNotificationPhase] = useState('')
+  const [showTutorial, setShowTutorial] = useState(false)
 
   // Load cards and saved decks on mount
   useEffect(() => {
@@ -188,68 +195,54 @@ function App() {
     }
   }
 
-  // Initialize game with custom decks
-  const initializeGameWithDecks = (deck1Data, deck2Data) => {
-    // Shuffle both decks
-    const shuffledDeck1 = shuffleDeck([...deck1Data])
-    const shuffledDeck2 = shuffleDeck([...deck2Data])
-    
-    return {
-      players: [
-        {
-          id: 1,
-          name: 'Player 1',
-          level: [],
-          hand: [],
-          deck: shuffledDeck1,
-          stage: [null, null, null, null, null],
-          waitingRoom: [],
-          clock: [],
-          stock: [],
-          climaxArea: null,
-          memory: [],
-          turn: true,
-          hasMulliganed: false
-        },
-        {
-          id: 2,
-          name: 'Player 2',
-          level: [],
-          hand: [],
-          deck: shuffledDeck2,
-          stage: [null, null, null, null, null],
-          waitingRoom: [],
-          clock: [],
-          stock: [],
-          climaxArea: null,
-          memory: [],
-          turn: false,
-          hasMulliganed: false
-        }
-      ],
-      currentPhase: 'stand',
-      currentTurn: 1,
-      turnNumber: 1,
-      gameLog: [],
-      selectedCard: null,
-      gameState: 'playing',
-      attackPhase: {
-        isActive: false,
-        attackingCharacter: null,
-        attackType: null,
-        defendingCharacter: null,
-        triggerCard: null
-      },
-      phaseActions: {
-        stand: { completed: false, description: 'Stand all characters' },
-        draw: { completed: false, description: 'Draw 1 card' },
-        clock: { completed: false, description: 'Optionally clock a card' },
-        main: { completed: false, description: 'Play cards and use abilities' },
-        climax: { completed: false, description: 'Play climax cards' },
-        attack: { completed: false, description: 'Attack with characters' },
-        end: { completed: false, description: 'End turn cleanup' }
+  // Convert trial deck cards to use database cards
+  const convertTrialDeckToDatabaseCards = (trialDeckCards, databaseCards) => {
+    return trialDeckCards.map(trialCard => {
+      // Strategy 1: Exact match by name and series
+      let matchingCard = databaseCards.find(dbCard => 
+        dbCard.name === trialCard.name && 
+        dbCard.series === trialCard.series
+      )
+      
+      // Strategy 2: Match by name only (if series doesn't match)
+      if (!matchingCard) {
+        matchingCard = databaseCards.find(dbCard => 
+          dbCard.name === trialCard.name
+        )
       }
-    }
+      
+      // Strategy 3: Fuzzy match by name (case insensitive)
+      if (!matchingCard) {
+        matchingCard = databaseCards.find(dbCard => 
+          dbCard.name.toLowerCase().includes(trialCard.name.toLowerCase()) ||
+          trialCard.name.toLowerCase().includes(dbCard.name.toLowerCase())
+        )
+      }
+      
+      if (matchingCard) {
+        console.log(`✅ Matched trial card "${trialCard.name}" to database card "${matchingCard.name}"`)
+        // Use database card with unique ID for this instance
+        return {
+          ...matchingCard,
+          id: `${matchingCard.id}-${Date.now()}-${Math.random()}`,
+          deckId: `${matchingCard.id}-${Date.now()}-${Math.random()}`
+        }
+      } else {
+        // Fallback to trial card if no match found
+        console.warn(`❌ No database match found for trial card: ${trialCard.name}`)
+        return {
+          ...trialCard,
+          id: `${trialCard.id}-${Date.now()}-${Math.random()}`,
+          deckId: `${trialCard.id}-${Date.now()}-${Math.random()}`
+        }
+      }
+    })
+  }
+
+  // Initialize game with custom decks using simple logic
+  const initializeGameWithDecks = (deck1Data, deck2Data) => {
+    console.log('🎮 Using simple game initialization...')
+    return simpleInitializeGame(deck1Data, deck2Data)
   }
 
   // Start game with selected decks
@@ -259,11 +252,75 @@ function App() {
       return
     }
 
+    console.log('🎮 Starting game with decks:', {
+      deck1: deck1.name,
+      deck1Cards: deck1.cards.length,
+      deck2: deck2.name,
+      deck2Cards: deck2.cards.length,
+      deck1Sample: deck1.cards.slice(0, 3).map(c => ({ name: c.name, type: c.type, level: c.level, series: c.series })),
+      deck2Sample: deck2.cards.slice(0, 3).map(c => ({ name: c.name, type: c.type, level: c.level, series: c.series })),
+      databaseCardsAvailable: allCards.length
+    })
+
     const newGameState = initializeGameWithDecks(deck1.cards, deck2.cards)
+    
+    console.log('🎮 Initialized game state:', {
+      player1Hand: newGameState.players[0].hand.length,
+      player1Deck: newGameState.players[0].deck.length,
+      player2Hand: newGameState.players[1].hand.length,
+      player2Deck: newGameState.players[1].deck.length,
+      player1HandCards: newGameState.players[0].hand.map(c => ({ 
+        name: c.name, 
+        type: c.type, 
+        level: c.level, 
+        series: c.series,
+        image: c.image ? 'has image' : 'no image',
+        fromDatabase: c.series && c.series !== 'Trial'
+      })),
+      player2HandCards: newGameState.players[1].hand.map(c => ({ 
+        name: c.name, 
+        type: c.type, 
+        level: c.level, 
+        series: c.series,
+        image: c.image ? 'has image' : 'no image',
+        fromDatabase: c.series && c.series !== 'Trial'
+      }))
+    })
     
     // Perform initial mulligan for both players
     newGameState.players.forEach(player => {
       performMulligan(player)
+    })
+    
+    console.log('🎮 After mulligan:', {
+      player1Hand: newGameState.players[0].hand.length,
+      player2Hand: newGameState.players[1].hand.length,
+      player1HandCards: newGameState.players[0].hand.map(c => ({ 
+        name: c.name, 
+        type: c.type, 
+        level: c.level, 
+        series: c.series,
+        image: c.image ? 'has image' : 'no image',
+        fromDatabase: c.series && c.series !== 'Trial'
+      })),
+      player2HandCards: newGameState.players[1].hand.map(c => ({ 
+        name: c.name, 
+        type: c.type, 
+        level: c.level, 
+        series: c.series,
+        image: c.image ? 'has image' : 'no image',
+        fromDatabase: c.series && c.series !== 'Trial'
+      }))
+    })
+    
+    console.log('🎯 Setting game state:', {
+      players: newGameState.players.map(p => ({
+        name: p.name,
+        turn: p.turn,
+        handLength: p.hand.length,
+        deckLength: p.deck.length
+      })),
+      currentPhase: newGameState.currentPhase
     })
     
     setGameState(newGameState)
@@ -273,6 +330,8 @@ function App() {
     setWinner(null)
     setGameLog(['Game started! Both players drew 5 cards.'])
     setCurrentScreen(SCREENS.GAME)
+    
+    console.log('🎯 Game state set, components should re-render')
   }
 
   // Game logic effects
@@ -298,13 +357,27 @@ function App() {
     
     const currentPlayer = gameState.players.find(p => p.turn)
     
+    console.log('🔄 Auto-phases check:', {
+      currentPhase,
+      standCompleted: gameState.phaseActions.stand.completed,
+      drawCompleted: gameState.phaseActions.draw.completed,
+      currentPlayer: currentPlayer.name
+    })
+    
     // Auto-execute stand phase
     if (currentPhase === 'stand' && !gameState.phaseActions.stand.completed) {
+      console.log('✨ Executing stand phase')
       const result = executeStandPhase(gameState)
       setGameLog(prev => [...prev, `✨ ${result.message}`])
+      setGameState(prevState => ({
+        ...prevState,
+        players: [...prevState.players],
+        phaseActions: {...prevState.phaseActions}
+      }))
       
       if (result.autoAdvance) {
         setTimeout(() => {
+          console.log('➡️ Advancing to draw phase')
           setCurrentPhase('draw')
         }, 500)
       }
@@ -312,14 +385,20 @@ function App() {
     
     // Auto-execute draw phase
     if (currentPhase === 'draw' && gameState.phaseActions.stand.completed && !gameState.phaseActions.draw.completed) {
+      console.log('📥 Executing draw phase')
       const result = executeDrawPhase(gameState)
       setGameLog(prev => [...prev, `📥 ${result.message}`])
-      setGameState({...gameState})
+      setGameState(prevState => ({
+        ...prevState,
+        players: [...prevState.players],
+        phaseActions: {...prevState.phaseActions}
+      }))
       
       if (result.gameOver) {
         handleGameOver(currentPlayer, 'deck out')
       } else if (result.autoAdvance) {
         setTimeout(() => {
+          console.log('➡️ Advancing to clock phase')
           setCurrentPhase('clock')
         }, 500)
       }
@@ -358,7 +437,12 @@ function App() {
     
     if (result.success) {
       setGameLog(prev => [...prev, `⏭️ ${result.message}`])
-      setGameState({...gameState})
+      setGameState(prevState => ({
+        ...prevState,
+        players: [...prevState.players],
+        phaseActions: {...prevState.phaseActions},
+        attackPhase: {...prevState.attackPhase}
+      }))
     }
   }
 
@@ -372,6 +456,15 @@ function App() {
     const currentPlayer = gameState.players.find(p => p.turn)
     const opponent = gameState.players.find(p => !p.turn)
     let result = null
+    
+    console.log('🎯 Card action:', {
+      action,
+      cardName: card?.name,
+      location,
+      position,
+      currentPhase,
+      currentPlayer: currentPlayer.name
+    })
 
     switch (action) {
       case 'play_character':
@@ -442,9 +535,16 @@ function App() {
     }
     
     if (result) {
+      console.log('🎯 Card action result:', result)
       if (result.success) {
         setGameLog(prev => [...prev, `✅ ${result.message}`])
-        setGameState({...gameState})
+        // Force a complete state update by creating a new object
+        setGameState(prevState => ({
+          ...prevState,
+          players: [...prevState.players],
+          phaseActions: {...prevState.phaseActions},
+          attackPhase: {...prevState.attackPhase}
+        }))
       } else {
         setGameLog(prev => [...prev, `❌ ${result.message}`])
       }
@@ -461,7 +561,12 @@ function App() {
     if (result.success) {
       setCurrentPhase(result.nextPhase)
       setGameLog(prev => [...prev, `➡️ ${result.message}`])
-      setGameState({...gameState})
+      setGameState(prevState => ({
+        ...prevState,
+        players: [...prevState.players],
+        phaseActions: {...prevState.phaseActions},
+        attackPhase: {...prevState.attackPhase}
+      }))
       
       // Show phase transition notification
       setNotificationPhase(result.nextPhase)
@@ -477,7 +582,12 @@ function App() {
     const result = endCurrentTurn(gameState)
     
     if (result.success) {
-      setGameState({...gameState})
+      setGameState(prevState => ({
+        ...prevState,
+        players: [...prevState.players],
+        phaseActions: {...prevState.phaseActions},
+        attackPhase: {...prevState.attackPhase}
+      }))
       setCurrentPhase('stand')
       setGameLog(prev => [...prev, `🔄 ${result.message}`])
       setWaitingForAction(null)
@@ -568,6 +678,7 @@ function App() {
         <MainMenu
           onStartGame={handleStartGame}
           onDeckBuilder={goToDeckBuilder}
+          onTutorial={() => setShowTutorial(true)}
           savedDecks={savedDecks}
         />
       </div>
@@ -668,14 +779,33 @@ function App() {
     )
   }
 
+  // Debug logging for App component
+  console.log('🎮 App render:', {
+    gameState: !!gameState,
+    gameStarted,
+    currentPhase,
+    players: gameState?.players?.map(p => ({
+      name: p.name,
+      turn: p.turn,
+      handLength: p.hand.length
+    }))
+  })
+
   return (
     <div className="App game-screen" style={{ minHeight: '100vh' }}>
       <AnimeBackground />
       
+      <GameTutorial 
+        gameState={gameState}
+        currentPhase={currentPhase}
+        onClose={() => setShowTutorial(false)}
+        isVisible={showTutorial}
+      />
+      
       <div className="game-layout">
         {/* Main Game Board */}
         <div className="game-board-container">
-      <GameBoard 
+      <CleanGameBoard 
         gameState={gameState}
         currentPhase={currentPhase}
         selectedCard={selectedCard}

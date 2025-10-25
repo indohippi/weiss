@@ -135,6 +135,17 @@
   box-shadow: 0 12px 32px rgba(139, 92, 246, 0.6);
 }
 
+.menu-btn.tertiary {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+}
+
+.menu-btn.tertiary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.6);
+}
+
 .menu-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;

@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { trialDecks } from '../gameLogic/trialDecks'
 import './MainMenu.css'
 
-const MainMenu = ({ onStartGame, onDeckBuilder, savedDecks = [] }) => {
+const MainMenu = ({ 
+  onStartGame, 
+  onDeckBuilder, 
+  onTutorial, 
+  savedDecks = [],
+  showGameplayTools = false,
+  onCardBrowser,
+  onGameplayTools,
+  onRuleReference
+}) => {
   const [selectedDeck1, setSelectedDeck1] = useState(null)
   const [selectedDeck2, setSelectedDeck2] = useState(null)
   const [showDeckSelection, setShowDeckSelection] = useState(false)
@@ -51,6 +60,37 @@ const MainMenu = ({ onStartGame, onDeckBuilder, savedDecks = [] }) => {
               >
                 <span>🎴 Deck Builder</span>
               </button>
+      <button
+        onClick={onTutorial}
+        className="menu-btn tertiary anime-energy-orb anime-holographic"
+      >
+        <span>📚 Tutorial</span>
+      </button>
+
+      {showGameplayTools && (
+        <>
+          <button
+            onClick={onCardBrowser}
+            className="menu-btn secondary anime-energy-orb anime-holographic"
+          >
+            <span>🔍 Card Browser</span>
+          </button>
+          
+          <button
+            onClick={onGameplayTools}
+            className="menu-btn secondary anime-energy-orb anime-holographic"
+          >
+            <span>🎮 Gameplay Tools</span>
+          </button>
+          
+          <button
+            onClick={onRuleReference}
+            className="menu-btn secondary anime-energy-orb anime-holographic"
+          >
+            <span>📖 Rule Reference</span>
+          </button>
+        </>
+      )}
               <div className="deck-count-info">
                 🎴 {trialDecks.length} trial decks • 💾 {savedDecks.length} custom deck{savedDecks.length !== 1 ? 's' : ''}
               </div>
