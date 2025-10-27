@@ -3,10 +3,11 @@
 .deck-builder {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
   color: white;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .deck-builder-header {
@@ -103,30 +104,37 @@
 
 .deck-builder-content {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: minmax(520px, 2.6fr) minmax(360px, 1fr);
   flex: 1;
-  overflow: hidden;
-  gap: 15px;
-  padding: 15px;
-  height: calc(100vh - 100px);
+  gap: 32px;
+  padding: 36px 48px 48px;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  align-items: stretch;
+  min-height: calc(100vh - 120px);
 }
 
 .browser-panel {
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .deck-panel {
   display: flex;
   flex-direction: column;
-  background: rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 15px;
+  background: linear-gradient(160deg, rgba(11, 18, 34, 0.95) 0%, rgba(7, 10, 22, 0.92) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 28px;
+  padding: 28px;
   overflow-y: auto;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(18px);
+  min-height: 0;
+  box-shadow: 0 28px 70px rgba(8, 12, 24, 0.65);
 }
 
 .deck-panel::-webkit-scrollbar {
@@ -187,12 +195,12 @@
 }
 
 .deck-stats {
-  margin-bottom: 15px;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  max-height: 250px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(8, 12, 24, 0.65);
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  max-height: 340px;
   overflow-y: auto;
 }
 
@@ -242,10 +250,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 .stat-item.valid {
@@ -314,13 +322,14 @@
 
 .deck-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
   overflow-y: auto;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  max-height: 400px;
+  padding: 20px;
+  background: rgba(8, 12, 24, 0.7);
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  max-height: none;
 }
 
 .deck-cards-grid::-webkit-scrollbar {
@@ -360,6 +369,8 @@
 .deck-card {
   width: 100%;
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .remove-card-btn {
@@ -393,16 +404,18 @@
 @media (max-width: 1200px) {
   .deck-builder-content {
     grid-template-columns: 1fr;
-    grid-template-rows: 60% 40%;
-    height: auto;
+    grid-template-rows: auto auto;
+    min-height: auto;
+    padding: 28px;
+    gap: 24px;
   }
 
   .browser-panel {
-    min-height: 500px;
+    min-height: 520px;
   }
 
   .deck-panel {
-    min-height: 400px;
+    min-height: 420px;
   }
 }
 
@@ -416,8 +429,8 @@
   }
 
   .deck-builder-content {
-    padding: 15px;
-    gap: 15px;
+    padding: 18px;
+    gap: 18px;
   }
 
   .stat-grid {
@@ -425,7 +438,9 @@
   }
 
   .deck-cards-grid {
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    padding: 16px;
+    gap: 16px;
   }
 }
 

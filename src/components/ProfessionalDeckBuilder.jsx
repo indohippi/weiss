@@ -235,15 +235,20 @@ const ProfessionalDeckBuilder = ({ allCards, cardsLoading, onBack }) => {
                     addCardToDeck(card)
                   }}
                 >
-                  <img 
-                    src={card.image} 
-                    alt={card.name}
-                    className="card-image"
-                    onError={(e) => {
-                      e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120"><rect width="200" height="120" fill="%23f5f5f5"/><text x="100" y="60" text-anchor="middle" fill="%239e9e9e" font-family="Arial" font-size="14">No Image</text></svg>'
-                    }}
-                  />
-                  
+                  <div className="card-visual">
+                    <div className="card-visual-frame">
+                      <img
+                        src={card.image}
+                        alt={card.name}
+                        className="card-visual-image"
+                        onError={(e) => {
+                          e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 280"><rect width="200" height="280" fill="%23f5f5f5"/><text x="100" y="140" text-anchor="middle" fill="%239e9e9e" font-family="Arial" font-size="16">No Image</text></svg>'
+                        }}
+                      />
+                    </div>
+                    <div className="card-visual-shadow" aria-hidden="true"></div>
+                  </div>
+
                   <div className="card-content">
                     <h4 className="card-title">{card.name}</h4>
                     <p className="card-description">

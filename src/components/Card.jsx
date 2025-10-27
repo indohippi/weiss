@@ -10,7 +10,7 @@ const Card = ({
   showDetails = true
 }) => {
   if (!card) {
-    return <div className={`card empty-card ${className}`}>No Card</div>
+    return <div className={`premium-card card empty-card ${className}`}>No Card</div>
   }
   
   // Debug logging for card rendering
@@ -58,7 +58,7 @@ const Card = ({
 
   return (
     <div
-      className={`card ${className} card-color-${card.color} ${card.image && !imageError ? 'has-image' : ''}`}
+      className={`premium-card card ${className} card-color-${card.color} ${card.image && !imageError ? 'has-image' : ''}`}
       onClick={handleClick}
       onContextMenu={onContextMenu}
       title={card.ability || card.name}
