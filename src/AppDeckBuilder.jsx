@@ -112,9 +112,8 @@ const AppDeckBuilder = () => {
     return (
       <div className="App deck-builder-app professional-weiss" style={{ minHeight: '100vh' }}>
         <CardBrowser
-          allCards={allCards}
-          cardsLoading={cardsLoading}
-          onBack={goToMenu}
+          cards={allCards}
+          loading={cardsLoading}
         />
       </div>
     )

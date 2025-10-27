@@ -3,7 +3,7 @@ import Card from './Card'
 import CardModal from './CardModal'
 import './CardBrowser.css'
 
-const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }) => {
+const CardBrowser = ({ cards = [], onCardClick, selectedCards = [], loading = false }) => {
   const [expandedCard, setExpandedCard] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [filters, setFilters] = useState({
@@ -24,6 +24,8 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
   useEffect(() => {
     if (!cards || cards.length === 0) {
       setFilteredCards([])
+      setUniqueSeries([])
+      setCurrentPage(1)
       return
     }
 
@@ -100,6 +102,9 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
   const startIndex = (currentPage - 1) * CARDS_PER_PAGE
   const endIndex = startIndex + CARDS_PER_PAGE
   const currentPageCards = filteredCards.slice(startIndex, endIndex)
+  const hasCards = cards && cards.length > 0
+  const displayStart = filteredCards.length === 0 ? 0 : startIndex + 1
+  const displayEnd = filteredCards.length === 0 ? 0 : Math.min(endIndex, filteredCards.length)
   
   const goToPage = (page) => {
     setCurrentPage(Math.max(1, Math.min(page, totalPages)))
@@ -107,9 +112,9 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
 
   if (loading) {
     return (
-      <div className="card-browser loading">
-        <div className="loading-spinner">
-          <div className="spinner"></div>
+      <div className="premium-card-browser premium-card-browser--loading">
+        <div className="premium-card-browser__loading">
+          <div className="premium-card-browser__spinner"></div>
           <p>Loading cards from database...</p>
         </div>
       </div>
@@ -117,38 +122,38 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
   }
 
   return (
-    <div className="card-browser">
-      <div className="browser-header">
+    <div className="premium-card-browser">
+      <div className="premium-card-browser__header">
         <h2>Card Browser</h2>
-        <div className="browser-info">
-          <div className="card-count">
-            Showing {startIndex + 1}-{Math.min(endIndex, filteredCards.length)} of {filteredCards.length} cards
+        <div className="premium-card-browser__info">
+          <div className="premium-card-browser__count">
+            Showing {displayStart}-{displayEnd} of {filteredCards.length} cards
           </div>
-          <div className="pagination-info">
+          <div className="premium-card-browser__pagination-info">
             Page {currentPage} / {totalPages || 1}
           </div>
-          <div className="card-hint">
-            💡 Click 🔍 or right-click cards to view details
+          <div className="premium-card-browser__hint">
+            💡 Click or right-click cards to view details
           </div>
         </div>
       </div>
 
-      <div className="search-filters">
-        <div className="search-bar">
+      <div className="premium-card-browser__controls">
+        <div className="premium-card-browser__search">
           <input
             type="text"
             placeholder="Search by name, ability, or trait..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
+            className="premium-card-browser__search-input"
           />
         </div>
 
-        <div className="filters-row">
+        <div className="premium-card-browser__filters-row">
           <select
             value={filters.type}
             onChange={(e) => handleFilterChange('type', e.target.value)}
-            className="filter-select"
+            className="premium-card-browser__filter"
           >
             <option value="all">All Types</option>
             <option value="character">Character</option>
@@ -159,7 +164,7 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
           <select
             value={filters.color}
             onChange={(e) => handleFilterChange('color', e.target.value)}
-            className="filter-select"
+            className="premium-card-browser__filter"
           >
             <option value="all">All Colors</option>
             <option value="yellow">Yellow</option>
@@ -171,7 +176,7 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
           <select
             value={filters.level}
             onChange={(e) => handleFilterChange('level', e.target.value)}
-            className="filter-select"
+            className="premium-card-browser__filter"
           >
             <option value="all">All Levels</option>
             <option value="0">Level 0</option>
@@ -183,7 +188,7 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
           <select
             value={filters.series}
             onChange={(e) => handleFilterChange('series', e.target.value)}
-            className="filter-select"
+            className="premium-card-browser__filter"
           >
             <option value="all">All Series</option>
             {uniqueSeries.map(series => (
@@ -191,34 +196,38 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
             ))}
           </select>
 
-          <button onClick={clearFilters} className="clear-filters-btn">
+          <button onClick={clearFilters} className="premium-card-browser__clear-btn">
             Clear Filters
           </button>
         </div>
       </div>
 
-      <div className="cards-grid">
+      <div className="premium-card-browser__grid">
         {currentPageCards.length === 0 ? (
-          <div className="no-cards">
-            <p>No cards found matching your criteria</p>
+          <div className="premium-card-browser__empty-state">
+            <p>
+              {hasCards
+                ? 'No cards found matching your criteria'
+                : 'No cards available. Try reloading the database or clearing filters.'}
+            </p>
           </div>
         ) : (
           currentPageCards.map((card) => {
             const count = getCardCount(card.id || card.code)
             return (
-              <div key={card.id || card.code} className="card-wrapper">
+              <div key={card.id || card.code} className="premium-card-browser__card-wrapper">
                 <Card
                   card={card}
                   onClick={() => onCardClick && onCardClick(card)}
                   onContextMenu={(e) => handleCardRightClick(e, card)}
                   showDetails={true}
-                  className={count > 0 ? 'card-in-deck' : ''}
+                  className={count > 0 ? 'premium-card-in-deck' : ''}
                 />
                 {count > 0 && (
-                  <div className="card-count-badge">{count}x</div>
+                  <div className="premium-card-browser__count-badge">{count}x</div>
                 )}
                 <button 
-                  className="card-expand-btn"
+                  className="premium-card-browser__expand-btn"
                   onClick={(e) => {
                     e.stopPropagation()
                     setExpandedCard(card)
@@ -235,29 +244,29 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="pagination-controls">
+        <div className="premium-card-browser__pagination">
           <button
-            className="pagination-btn"
+            className="premium-card-browser__pagination-btn"
             onClick={() => goToPage(1)}
             disabled={currentPage === 1}
           >
             ⏮️ First
           </button>
           <button
-            className="pagination-btn"
+            className="premium-card-browser__pagination-btn"
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
             ◀️ Prev
           </button>
-          <div className="page-numbers">
+          <div className="premium-card-browser__pagination-pages">
             {[...Array(Math.min(5, totalPages))].map((_, i) => {
               const pageNum = Math.max(1, currentPage - 2) + i
               if (pageNum > totalPages) return null
               return (
                 <button
                   key={pageNum}
-                  className={`page-number ${pageNum === currentPage ? 'active' : ''}`}
+                  className={`premium-card-browser__pagination-page ${pageNum === currentPage ? 'is-active' : ''}`}
                   onClick={() => goToPage(pageNum)}
                 >
                   {pageNum}
@@ -266,14 +275,14 @@ const CardBrowser = ({ cards, onCardClick, selectedCards = [], loading = false }
             })}
           </div>
           <button
-            className="pagination-btn"
+            className="premium-card-browser__pagination-btn"
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
             Next ▶️
           </button>
           <button
-            className="pagination-btn"
+            className="premium-card-browser__pagination-btn"
             onClick={() => goToPage(totalPages)}
             disabled={currentPage === totalPages}
           >

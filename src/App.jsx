@@ -742,6 +742,7 @@ function App() {
         ) : (
           <DeckBuilder
             allCards={allCards}
+            cardsLoading={cardsLoading}
             onSaveDeck={saveDeck}
             onBackToMenu={goToMenu}
           />

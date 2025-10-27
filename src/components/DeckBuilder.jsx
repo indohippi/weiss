@@ -4,7 +4,7 @@ import Card from './Card'
 import DeckExporter from './DeckExporter'
 import './DeckBuilder.css'
 
-const DeckBuilder = ({ allCards, onSaveDeck, onBackToMenu, initialDeck = [] }) => {
+const DeckBuilder = ({ allCards, cardsLoading = false, onSaveDeck, onBackToMenu, initialDeck = [] }) => {
   const [deck, setDeck] = useState(initialDeck || [])
   const [deckName, setDeckName] = useState('My Deck')
   const [validationErrors, setValidationErrors] = useState([])
@@ -158,7 +158,7 @@ const DeckBuilder = ({ allCards, onSaveDeck, onBackToMenu, initialDeck = [] }) =
             cards={allCards}
             onCardClick={addCardToDeck}
             selectedCards={deck}
-            loading={!allCards || allCards.length === 0}
+            loading={cardsLoading}
           />
         </div>
 
